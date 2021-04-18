@@ -15,20 +15,12 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div
-          class="modal-body"
-          ref="modalBody"
-          @scroll="onBodyScroll"
-        >
+        <div class="modal-body" ref="modalBody" @scroll="onBodyScroll">
           <slot></slot>
         </div>
         <div class="modal-footer">
           <slot name="footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              @click="closeModal"
-            >
+            <button type="button" class="btn btn-secondary" @click="closeModal">
               Отмена
             </button>
             <button
@@ -44,37 +36,43 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   props: {
     title: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   data() {
     return {
-      isRulesReaded: false
-    }
+      isRulesReaded: false,
+    };
   },
   beforeCreate() {
-    console.log('beforeCreate')
+    console.log("beforeCreate");
+  },
+  mounted() {
+    console.log(this.$refs.modalBody.scrollTop);
+    console.log("create");
+    this.$refs.modalBody.scrollTop = this.$refs.modalBody.scrollHeight;
   },
   methods: {
     closeModal() {
-      this.$emit('close')
+      this.$emit("close");
     },
     onBodyScroll() {
-      const modalBody = this.$refs.modalBody
-      if (modalBody.clientHeight + modalBody.scrollTop >= modalBody.scrollHeight) {
-        this.isRulesReaded = true
+      const modalBody = this.$refs.modalBody;
+      if (
+        modalBody.clientHeight + modalBody.scrollTop >=
+        modalBody.scrollHeight
+      ) {
+        this.isRulesReaded = true;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
-
 <style lang="scss" scoped>
 .modal {
   display: block;
